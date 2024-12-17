@@ -1,8 +1,40 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# WanderWise Travel Agency Booking System
 
-Currently, two official plugins are available:
+## Project Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+WanderWise is a comprehensive travel agency booking platform that allows users to explore, book, and manage travel packages while providing administrators with tools to manage packages and bookings.
+
+### Project Objectives
+
+The primary goal of WanderWise is to create a user-friendly travel booking system with robust features for both customers and administrators.
+
+## Features
+
+### Customer Features
+- 🌍 Browse Available Tour Packages
+- 📦 View Detailed Package Information
+- 🛒 Book Packages with Simple Booking Form
+- 🧾 Generate Instant Booking Invoices
+
+### Admin Features
+- 📝 Manage Tour Packages (Add, Update, Delete)
+- 👀 View All Bookings
+- 🔒 Secure Admin Dashboard
+
+## Tech Stack
+
+### Frontend
+- React.js
+- Next.js (Optional)
+- TailwindCSS
+- React Router
+- Axios
+
+### Backend
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+
+Happy travelling with WanderWise! 🌎✈️
