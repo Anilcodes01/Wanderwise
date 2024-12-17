@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import ProfilePage from "./pages/ProfilePage";
 import PackageDetailPage from "./pages/PackageDetailPage";
+import { BrowserRouter } from "react-router-dom";
 
 const ProtectedRoute = () => {
   const { isAuthenticated } = useAuth();
@@ -21,25 +22,27 @@ const PublicRoute = () => {
 
 function App() {
   return (
-    <AuthProvider>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route element={<PublicRoute />}>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-          </Route>
+    <BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route element={<PublicRoute />}>
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignupPage />} />
+            </Route>
 
-          <Route element={<ProtectedRoute />}>
-            <Route path="/home" element={<HomePage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/package/:id" element={<PackageDetailPage />} />
-          </Route>
+            <Route element={<ProtectedRoute />}>
+              <Route path="/home" element={<HomePage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/package/:id" element={<PackageDetailPage />} />
+            </Route>
 
-          <Route path="/" element={<Navigate to="/home" replace />} />
-          <Route path="*" element={<div>Not Found</div>} />
-        </Route>
-      </Routes>
-    </AuthProvider>
+            <Route path="/" element={<Navigate to="/home" replace />} />
+            <Route path="*" element={<div>Not Found</div>} />
+          </Route>
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 
