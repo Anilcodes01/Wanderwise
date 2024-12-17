@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const VITE_BACKEND_URL="https://wanderwise-yvxl.vercel.app/api"
+const VITE_BACKEND_URL="https://wanderwise-backend-sigma.vercel.app/api"
 
 const API_URL = VITE_BACKEND_URL 
 console.log(API_URL)
