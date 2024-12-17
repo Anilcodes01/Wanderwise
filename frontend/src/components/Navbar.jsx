@@ -6,10 +6,11 @@ import {
   LogOut,
   Compass,
   Menu,
-  X
+  X,
+  ShieldCheck
 } from "lucide-react";
 
-export default function Navbar({ onLogout }) {
+export default function Navbar({ onLogout, userRole }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -23,7 +24,6 @@ export default function Navbar({ onLogout }) {
   return (
     <nav className="bg-white w-full px-2 shadow-md sticky top-0 z-50">
       <div className="container flex justify-between items-center py-4 relative">
-        
         <Link
           to="/home"
           className="flex items-center text-2xl gap-2 font-bold text-gray-800 hover:text-blue-600 transition-colors"
@@ -32,15 +32,13 @@ export default function Navbar({ onLogout }) {
           <span>WanderWise</span>
         </Link>
 
-   
-        <button 
+        <button
           className="md:hidden focus:outline-none"
           onClick={toggleMenu}
         >
           {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
 
-      
         <div className="hidden md:flex items-center space-x-4">
           <Link
             to="/home"
@@ -62,6 +60,18 @@ export default function Navbar({ onLogout }) {
             <span>Profile</span>
           </Link>
 
+          {userRole === 'admin' && (
+            <Link
+              to="/admin"
+              className="flex items-center text-green-700 hover:text-green-800 transition-all group"
+            >
+              <ShieldCheck
+                className="h-5 text-green-600 group-hover:text-green-700 transition-colors mr-1"
+              />
+              <span>Admin</span>
+            </Link>
+          )}
+
           <button
             onClick={onLogout}
             className="flex items-center text-red-500 hover:text-red-600 transition-all group"
@@ -73,7 +83,6 @@ export default function Navbar({ onLogout }) {
           </button>
         </div>
 
-       
         {isMenuOpen && (
           <div className="absolute top-full left-0 w-full bg-white shadow-lg md:hidden">
             <div className="flex flex-col items-start p-4 space-y-2">
@@ -98,6 +107,19 @@ export default function Navbar({ onLogout }) {
                 />
                 <span>Profile</span>
               </Link>
+
+              {userRole === 'admin' && (
+                <Link
+                  to="/admin"
+                  onClick={closeMenu}
+                  className="flex items-center w-full text-green-700 hover:text-green-800 transition-all group"
+                >
+                  <ShieldCheck
+                    className="h-5 text-green-600 group-hover:text-green-700 transition-colors mr-2"
+                  />
+                  <span>Admin</span>
+                </Link>
+              )}
 
               <button
                 onClick={() => {

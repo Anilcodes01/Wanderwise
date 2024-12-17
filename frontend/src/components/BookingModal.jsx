@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { jsPDF } from "jspdf";
 import { X, Check } from "lucide-react";
 import { packageService } from "../services/packageService";
 import { authService } from "../services/authService";
@@ -38,6 +39,33 @@ export default function BookingModal({ isOpen, onClose, packageDetails }) {
     }
   };
 
+  const generateInvoice = (bookingData) => {
+    const doc = new jsPDF();
+
+    // Title
+    doc.setFontSize(20);
+    doc.text("Booking Invoice", 105, 20, { align: "center" });
+
+    // Booking Details
+    doc.setFontSize(12);
+    doc.text(`Customer Name: ${bookingData.customerName}`, 20, 40);
+    doc.text(`Email: ${bookingData.email}`, 20, 50);
+    doc.text(`Phone Number: ${bookingData.phoneNumber}`, 20, 60);
+    doc.text(`Number of Travelers: ${bookingData.numberOfTravelers}`, 20, 70);
+    doc.text(`Special Requests: ${bookingData.specialRequests || "None"}`, 20, 80);
+
+    // Package Details
+    doc.text(`Package Name: ${packageDetails.title}`, 20, 100);
+    doc.text(`Package Price: Rs. ${packageDetails.price}`, 20, 110);
+    doc.text(`Total Price: Rs. ${bookingData.totalPrice.toLocaleString()}`, 20, 120);
+
+    // Footer
+    doc.text("Thank you for booking with us!", 105, 140, { align: "center" });
+
+    // Save the PDF
+    doc.save("booking-invoice.pdf");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -57,6 +85,9 @@ export default function BookingModal({ isOpen, onClose, packageDetails }) {
         success: true,
         message: response.message || "Booking successful!",
       });
+
+      // Generate Invoice
+      generateInvoice(submissionData);
 
       setTimeout(() => {
         onClose();
@@ -103,14 +134,11 @@ export default function BookingModal({ isOpen, onClose, packageDetails }) {
 
         {bookingStatus.message && (
           <div
-            className={`
-            mx-6 mt-4 p-3 rounded-lg flex items-center
-            ${
+            className={`mx-6 mt-4 p-3 rounded-lg flex items-center ${
               bookingStatus.success
                 ? "bg-green-100 text-green-700"
                 : "bg-red-100 text-red-700"
-            }
-          `}
+            }`}
           >
             {bookingStatus.success ? <Check className="mr-2" /> : null}
             {bookingStatus.message}
@@ -118,6 +146,7 @@ export default function BookingModal({ isOpen, onClose, packageDetails }) {
         )}
 
         <form onSubmit={handleSubmit} className="p-6 pt-4 space-y-4">
+          {/* Input Fields */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Customer Name
@@ -201,14 +230,11 @@ export default function BookingModal({ isOpen, onClose, packageDetails }) {
           <button
             type="submit"
             disabled={loading}
-            className={`
-              w-full text-white py-3 rounded-lg transition-colors font-semibold
-              ${
-                loading
-                  ? "bg-blue-400 cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700"
-              }
-            `}
+            className={`w-full text-white py-3 rounded-lg transition-colors font-semibold ${
+              loading
+                ? "bg-blue-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
           >
             {loading ? "Booking..." : "Confirm Booking"}
           </button>
